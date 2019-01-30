@@ -1,7 +1,6 @@
 import requests
 import re
 import os 
-import wget 
 from pytube import YouTube
 from bs4 import BeautifulSoup
 
