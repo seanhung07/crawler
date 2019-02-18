@@ -3,12 +3,17 @@ import re
 import os 
 from pytube import YouTube
 from bs4 import BeautifulSoup
+import pyfiglet
+from colorama import Fore, Back, Style
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
-print("This is the tool that you can Downloads YouTube video or Image and PDF!!!\n Just Enter the Url and you can Downloads everthings you want")
-print("=========================================================================")
-x=raw_input("Enter the url (With http:// or https:// ): ")
+banner = pyfiglet.figlet_format("WELCOME!!")
+print(banner)
+print("**********************************")
+print("* This is the tool that you can:*\n* -Find the URL in the page     * \n* -Find the IMG URL and Download*\n* -Find the PDF URL and Download*\n* -Download YouTube Video       *")
+print("**********************************")
+x = raw_input("\033[1;32;40m ===>> PASTE the URL (With http:// or https:// ): ")
 res = requests.get(str(x), headers=headers)
 soup = BeautifulSoup(res.text, "html.parser")
 s=x.split('/')
@@ -21,10 +26,9 @@ if res.status_code == 200:
     print('Web site exists')
 else:
     print('Web site does not exist')
-def getFile(url):
-        os.system("wget "+z[i])
+
 print("What do you want to find?\n1. url in the page\n2. img url in the page\n3. pdf url in the page\n4. Download the youtube video")
-y=input()
+y = raw_input("\033[1;37;40m Which do you want? ")
 if y==1:
     for link in soup.findAll('a', attrs={'href': re.compile('[a-z]+')}):
         a=link.get('href')
@@ -87,7 +91,8 @@ if ans=="yes":
 else:
     pass
 
-
+def getFile(url):
+        os.system("wget "+z[i])
 
 
 
