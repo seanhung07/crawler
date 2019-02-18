@@ -1,5 +1,6 @@
 #!/bin/sh
-sudo easy_install pip
+curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
+sudo python get-pip.py
 pip install beautifulsoup4
 pip install requests
 pip install wget
