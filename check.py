@@ -1,11 +1,10 @@
 import requests
 import re
-import os 
+import os
 from pytube import YouTube
 from bs4 import BeautifulSoup
 import pyfiglet
 from colorama import Fore, Back, Style
-
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
 banner = pyfiglet.figlet_format("WELCOME!!")
@@ -13,46 +12,60 @@ print(banner)
 print("**********************************")
 print("* This is the tool that you can:*\n* -Find the URL in the page     * \n* -Find the IMG URL and Download*\n* -Find the PDF URL and Download*\n* -Download YouTube Video       *")
 print("**********************************")
-x = raw_input("\033[1;32;40m ===>> PASTE the URL (With http:// or https:// ): ")
+x = raw_input("\033[92m ===>> PASTE the URL (With http:// or https:// ): ")
 res = requests.get(str(x), headers=headers)
 soup = BeautifulSoup(res.text, "html.parser")
-s=x.split('/')
-images=[]
-imgurl=""
-imgurl2=""
-count=0
-z=[]
+s = x.split('/')
+images = []
+imgurl = ""
+imgurl2 = ""
+count = 0
+z = []
 if res.status_code == 200:
     print('Web site exists')
 else:
     print('Web site does not exist')
 
-print("What do you want to find?\n1. url in the page\n2. img url in the page\n3. pdf url in the page\n4. Download the youtube video")
-y = raw_input("\033[1;37;40m Which do you want? ")
-if y==1:
+
+def getFile(url):
+        os.system("wget "+z[i])
+
+
+print("\033[;1m What do you want to find?\n1. url in the page\n2. img url in the page\n3. pdf url in the page\n4. Download the youtube video")
+y = input()
+if y == 1:
     for link in soup.findAll('a', attrs={'href': re.compile('[a-z]+')}):
-        a=link.get('href')
+        a = link.get('href')
         if a == "javascript:void(0)":
             pass
-        elif a[0:4]!="http":
+        elif a[0:4] != "http":
             print(s[0]+"//"+s[2]+"/"+link.get('href'))
-            count+=1
+            count += 1
         else:
             print(link.get('href'))
-            count+=1
-        
-elif y==2:
+            count += 1
+
+elif y == 2:
     for img in soup.findAll('img', attrs={'src': re.compile('[a-z]+')}):
         b = img.get('src')
         z.append(s[0]+"//"+s[2]+"/"+img.get('src'))
         if b[0:4] != "http":
             print(s[0]+"//"+s[2]+"/"+img.get('src'))
-            count+=1
+            count += 1
         else:
             z.append(img.get('src'))
             print(img.get('src'))
-            count+=1
-elif y==3:
+            count += 1
+        ans = raw_input("Do you want to Download?(YES or NO) ")
+        if ans == "yes":
+            i = 0
+        while i < len(z):
+            getFile(z[i])
+            i += 1
+        else:
+                pass
+
+elif y == 3:
      for link in soup.findAll('a', attrs={'href': re.compile('[a-z]+')}):
         pas = link.get('href')
         if pas == "javascript:void(0)":
@@ -62,12 +75,18 @@ elif y==3:
         elif pas[0:4] != "http":
             z.append(s[0]+"//"+s[2]+"/"+link.get('href'))
             print(s[0]+"//"+s[2]+"/"+link.get('href'))
-            count+=1
-        else: 
+            count += 1
+        else:
             z.append(link.get('href'))
             print(link.get('href'))
-            count+=1
-elif y==4:
+            count += 1
+        ans = raw_input("Do you want to Download?(YES or No) ")
+        if ans == "yes":
+            i = 0
+        while i < len(z):
+            getFile(z[i])
+            i += 1
+elif y == 4:
     yt = YouTube(x)
     videos = yt.streams.all()
     s = 1
@@ -79,20 +98,7 @@ elif y==4:
     vid.download()
     print("\n successfully downloaded")
 
-print("Total link: "+ str(count))    
-
-ans=raw_input("Do you want to Download?(for img and pdf) ")
-
-if ans=="yes":
-    i=0
-    while i<len(z):
-        getFile(z[i])
-        i+=1
-else:
-    pass
-
-def getFile(url):
-        os.system("wget "+z[i])
+print("Total link: " + str(count))
 
 
 
