@@ -56,15 +56,6 @@ elif y == 2:
             z.append(img.get('src'))
             print(img.get('src'))
             count += 1
-        ans = raw_input("Do you want to Download?(YES or NO) ")
-        if ans == "yes":
-            i = 0
-        while i < len(z):
-            getFile(z[i])
-            i += 1
-        else:
-                pass
-
 elif y == 3:
      for link in soup.findAll('a', attrs={'href': re.compile('[a-z]+')}):
         pas = link.get('href')
@@ -80,12 +71,6 @@ elif y == 3:
             z.append(link.get('href'))
             print(link.get('href'))
             count += 1
-        ans = raw_input("Do you want to Download?(YES or No) ")
-        if ans == "yes":
-            i = 0
-        while i < len(z):
-            getFile(z[i])
-            i += 1
 elif y == 4:
     yt = YouTube(x)
     videos = yt.streams.all()
@@ -97,8 +82,17 @@ elif y == 4:
     vid = videos[n-1]
     vid.download()
     print("\n successfully downloaded")
+if  y==2 or y==3:
+    print("Total link: " + str(count))
+    ans = raw_input("Do you want to Download?(Enter: yes or no) ")
+    if ans == "yes":
+        i = 0
+        while i < len(z):
+            getFile(z[i])
+            i += 1
+    else:
+        pass
 
-print("Total link: " + str(count))
 
 
 
